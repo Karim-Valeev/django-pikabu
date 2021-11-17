@@ -15,27 +15,28 @@
 ### ERD:
 
 - user:
-- id | PK
-- username
-- email
-- password
+  - id | PK
+  - username
+  - email
+  - password
 
 - post:
-- id | PK
-- author | FK
-- title
-- body
-- created_at (auto)
-- comments 
-- category | FK
+  - id | PK
+  - author | FK
+  - title
+  - body
+  - created_at (auto)
+  - comments 
+  - categories | M2M
 
 - comment:
-- id | PK
-- author | FK
-- text
-- created_at
-- post | FK
-- in_reply_to | FK
+  - id | PK
+  - author | FK
+  - text
+  - created_at
+  - post | FK
+  - in_reply_to | FK
+  - like(?) 
 
 
 ### Запуск

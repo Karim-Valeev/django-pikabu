@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+{%  block title %}Register{% endblock %}
+{% block content %}
+
+{#    <form action="" method="post" enctype="multipart/form-data">#}
+{#        {% if form.errors %}#}
+{#            <b>Проверьте следующие поля:</b>#}
+{#            <ul>#}
+{#            {% for field, error in form.errors.items %}#}
+{#                {{ field }}: {{ error }}#}
+{#            {% endfor %}#}
+{#            </ul>#}
+{#        {% endif %}#}
+{#        {% csrf_token %}#}
+{#        <label>#}
+{#            Username <br>#}
+{#            <input type="text" name="username">#}
+{#        </label>#}
+{#        <br>#}
+{#        <label>#}
+{#            Email <br>#}
+{#            <input type="text" name="email">#}
+{#        </label>#}
+{#        <br>#}
+{#        <label>#}
+{#            Password <br>#}
+{#            <input type="password" name="password1">#}
+{#        </label>#}
+{#        <br>#}
+{#        <label>#}
+{#            Confirm password <br>#}
+{#            <input type="password" name="password2">#}
+{#        </label>#}
+{#        <br>#}
+{#        <label>#}
+{#            Bitrhdate <br>#}
+{#            <input type="date" name="birthdate">#}
+{#        </label>#}
+{#        <br>#}
+{##}
+{#        <label>#}
+{#            Avatar <br>#}
+{#            <input type="file" name="profile_pic" alt="picture">#}
+{#        </label>#}
+{#        <br>#}
+{#        <div class="form-check">#}
+{#            <input type="checkbox" class="form-check-input" id="exampleCheck1">#}
+{#            <label class="form-check-label" for="exampleCheck1">Subscribe to email alerts about sales</label>#}
+{#        </div>#}
+{#        {% if message %}#}
+{#            <p>#}
+{#                <b>{{ message }}</b>#}
+{#            </p>#}
+{#        {% endif %}#}
+{#        <button class="btn btn-primary m-1" type="submit">Register</button>#}
+{#    </form>#}
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container mt-4 mb-4">
+            <div class="row justify-content-md-center">
+                <div class="col-md-12 col-lg-5">
+                    <h1 class="h2 mb-4 center ">Registration</h1>
+                    <label>Username:</label>
+                    <div>
+                        <input type="text" name="username" required class="form-control mb-2" style="width:100%"  placeholder="Enter username here" value=""/>
+                    </div>
+                    <label>Email:</label>
+                    <div>
+                        <input type="text" name="email" required class="form-control mb-2" style="width:100%"  placeholder="Enter email here" value=""/>
+                    </div>
+                    <label>Birthday:</label>
+                    <div>
+                        <input type="date" name="birthdate" required class="form-control mb-2" style="width:100%"  placeholder="Enter birthday here" value=""/>
+                    </div>
+                    <label>Password</label>
+                    <div>
+                        <input type="password" name="password1" required class="form-control mb-2" style="width:100%"  placeholder="Enter password here" value=""/>
+                    </div>
+                    <label>Password confirmation:</label>
+                    <div>
+                        <input type="password" name="password2" required class="form-control mb-2" style="width:100%"  placeholder="Confirm password" value=""/>
+                    </div>
+                    <label>
+                        Avatar: <br>
+                        <input type="file" name="profile_pic" alt="picture">
+                    </label>
+                    <br>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Subscribe to email alerts about
+                            sales</label>
+                    </div>
+
+                    {% if form.errors %}
+                        <b>Проверьте следующие поля:</b>
+                        <ul>
+                            {% for field, error in form.errors.items %}
+                                {{ field }}: {{ error }}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if message %}
+                        <p>
+                            <b>{{ message }}</b>
+                        </p>
+                    {% endif %}
+
+                    <div class="center top-margin-10px">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="login-button">
+                                Create account
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

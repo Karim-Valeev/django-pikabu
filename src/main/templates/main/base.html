@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Base{% endblock %}</title>
+
+    <link rel="shortcut icon" href="{% static "main/img/forum.png" %}">
+
+{#    Todo to make block head insome templates to decrease amount of static files loaded#}
+
+    <link rel="stylesheet" href="{% static 'main/css/header_and_footer.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/switch.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/html_elements_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+{#    npm модуль слишком старый а CDN использовать не хочется#}
+    <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/all.min.css" %}" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet">
+
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+    <header>
+{#        <div class="nav">#}
+{#            <div class="pic">#}
+{#                <img src="{%  static 'main/img/header/download.png' %}" alt="rus" class="center" width="30" height="40"/>#}
+{#            </div>#}
+{#            <div class="pic">#}
+{#                <a href="{% url 'shops' %}">Shops</a>#}
+{#            </div>#}
+{#            <div>#}
+{#                <a href="{% url 'sales'%}">#}
+{#                    <img src="{% static 'main/img/header/sale.png' %}" class="center" alt="Sale!" width="75" height="60" >#}
+{#                </a>#}
+{#            </div>#}
+{#            <div class="center">#}
+{#                <a class="main-title-link" style="text-decoration: none" href="{% url '' %}">#}
+{#                    <h1>MyFoods</h1>#}
+{##}
+{#                </a>#}
+{#            </div>#}
+{##}
+{#            <div>#}
+{#                    {% if user.is_authenticated %}#}
+{#                        <span class="profile">#}
+{#                            <a class="profile" href="{% url 'profile' %}">{{ user.username }}</a>#}
+{#                        </span>#}
+{#                        <span class="profile">#}
+{#                            <a href="{% url 'baskets' %}">Baskets</a>#}
+{#                        </span>#}
+{#                    {% else %}#}
+{#                        <div class="profile">#}
+{#                            Profile#}
+{#                        </div>#}
+{#                    {% endif %}#}
+{#                    <a href="{% url 'register' %}">register</a>#}
+{#            </div>#}
+{#        </div>#}
+    </header>
+
+    {% block content %}
+        Content
+    {% endblock %}
+
+    <footer>
+{#        <div class="footer">#}
+{#            <div class="footer-text">#}
+{#                <div>#}
+{#                    <span class="fa fa-copyright" aria-hidden="true"></span> MyFoods, 2007-2021#}
+{#                </div>#}
+{#                <div>#}
+{#                    Site development: Karim, <a href="https://github.com/Karim-Valeev">https://github.com/Karim-Valeev</a>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="center">#}
+{#                <img src="{% static 'main/img/footer/mir_viza_mc_2019.png' %}" class="img-center" alt="footer" width="270" height="74">#}
+{#            </div>#}
+{##}
+{#            <div>#}
+{#                <a href="https://www.instagram.com/wakai___kami/" class="insta" >#}
+{#                    <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>#}
+{#                </a>#}
+{#            </div>#}
+{#        </div>#}
+    </footer>
+
+
+    <script src="{% static "node_modules/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "node_modules/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "main/js/script.js" %}"></script>
+</body>
+</html>

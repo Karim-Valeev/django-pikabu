@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{%  block title %}Profile{% endblock %}
+{% block content %}
+
+    <div>
+        <img src="{{ request.user.profile_pic.url }}" width="200px" height="200px" alt="Profile picture">
+    </div>
+    <div>
+        <h2>{{ user.username }}</h2>
+
+    </div>
+    <div>
+        There will be some additional info about user
+    </div>
+
+    <div class="fav-categories">
+        <h3>Favourite Categories:</h3>
+        {% for category in user.favourite_categories.all %}
+            <div class="category">
+                <li>
+                    {{ category.name }}
+                </li>
+            </div>
+        {% empty %}
+            No favourite categories yet.
+        {% endfor %}
+        {% if user.favourite_categories.all|length < 5 %}
+            <form action="{% url 'add_favourite_category' %}" method="post">
+                {% csrf_token %}
+                <select name="category_name" class="form-control mb-2">
+                    <option selected="selected" class="m-2" value="{{ selected_category.name }}">{{ selected_category.name }}</option>
+                    {% for category in remaining_categories %}
+                        <option class="m-2" value="{{ category.name}}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-primary">
+                    Add category!
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="{% url 'baskets' %}">Your baskets</a>
+    </div>
+
+{% endblock %}

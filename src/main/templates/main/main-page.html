@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{%  block title %}Main{% endblock %}
+{% block content %}
+
+{#    <div class="main-page-text">#}
+{#        MAIN PAGE WITH BEAUTIFUL FRONTEND#}
+{#    </div>#}
+{##}
+{#    <div class="main-page-text">#}
+{#        There will be some info about us in the future#}
+{#    </div>#}
+
+    <div class="profile center main-page-text" >
+        {% if user.is_authenticated %}
+            <div>
+                <a href="{% url 'logout' %}">logout</a>
+            </div>
+        {% else %}
+            <div>
+                <a href="{% url 'login' %}">login</a>
+            </div>
+
+        {% endif %}
+        <div>
+            <a href="{% url 'register' %}">register</a>
+        </div>
+    </div>
+
+
+{% endblock %}
