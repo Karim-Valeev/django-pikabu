@@ -1,16 +1,16 @@
 from django.urls import path
 
-from .views import main_page
+from .views import *
 
 urlpatterns = [
     # Root
-    path("", main_page, name=""),
+    path("", main_page, name="main"),
     # Account
-    path("account/register/", main_page, name="register"),
-    path("account/login/", main_page, name="login"),
-    path("account/logout/", main_page, name="logout"),
-    path("account/", main_page, name="account"),
-    path("account/my-posts/", main_page, name=""),
+    path("register/", registration_view, name="register"),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
+    path("account/", account_view, name="account"),
+    path("account/my-posts/", main_page, name="my-posts"),
     # Posts
     path("posts/", main_page, name=""),
     path("posts/<int:post_id>/", main_page, name=""),

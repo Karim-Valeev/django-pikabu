@@ -9,7 +9,7 @@ class Comment(BaseModel):
     author = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE, verbose_name="Author")
     text = models.TextField(max_length=3000, null=True, blank=True, verbose_name="Text")
     post = models.ForeignKey(
-        Post, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Under post", related_name="comments"
+        Post, null=False, blank=False, on_delete=models.CASCADE, verbose_name="Under post", related_name="comments"
     )
     in_reply_to = models.ForeignKey(
         "Comment",

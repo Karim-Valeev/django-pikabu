@@ -1,21 +1,17 @@
-# from api.models import Note
-#
-# from api.serializers import NoteCreateSerializer
-# from api.serializers import NoteSerializer
-# from api.serializers import NoteUpdateSerializer
-# from api.serializers import UserCreateSerializer
-from django.http import Http404
+from main.models import Post
 from main.models import User
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
-from rest_framework.permissions import BasePermission
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from .serializers import PostCreateSerializer
+from .serializers import PostSerializer
+from .serializers import PostUpdateSerializer
+from .serializers import UserCreateSerializer
 
 
 @api_view(["GET"])
@@ -25,16 +21,37 @@ def check_api_view(request):
     return Response(content, status=status.HTTP_200_OK)
 
 
-# class UserCreate(generics.CreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserCreateSerializer
-#     permission_classes = (AllowAny,)
-#
-#     def perform_create(self, serializer):
-#         instance: User = serializer.save()
-#         Token.objects.create(user=instance)
-#
-#
+class UserCreate(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserCreateSerializer
+    permission_classes = (AllowAny,)
+
+
+class PostViewSet(ModelViewSet):
+    permission_classes = [AllowAny]
+    serializer_class = PostSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["title"]
+
+    def perform_create(self, serializer):
+        author = self.request.user
+        serializer.save(author=author)
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return PostSerializer
+        if self.action == "create":
+            return PostCreateSerializer
+        if self.action == "update":
+            return PostUpdateSerializer
+        return PostSerializer
+
+    def get_queryset(self):
+        # user = self.request.user
+        # return Post.objects.filter(author=user)
+        return Post.objects.all()
+
+
 # class NoteChangeOnlyForOwnerPermission(BasePermission):
 #     def has_object_permission(self, request, view, obj):
 #         return obj.author.id == request.user.id

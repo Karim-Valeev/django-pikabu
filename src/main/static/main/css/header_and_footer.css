@@ -3,16 +3,22 @@
     text-align: center;
 }
 
-.nav{
+.navigation{
     background-color: white;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-right: 5px;
     margin-left: 5px;
     /*margin: 30px 30px 30px 30px;*/
-    border: blue 3px solid;
+    border: rgba(50,76,255,0.11) 3px solid;
 }
+
+.profile{
+    font-size: 25px;
+    margin: 20px;
+}
+
 .pic{
     margin-left: 10px;
 }
@@ -25,10 +31,6 @@
     color: black;
 }
 
-.profile{
-    font-size: 20px;
-    margin-right: 10px;
-}
 .center{
     text-align: center;
     font-size: 40px;

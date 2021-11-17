@@ -2,10 +2,13 @@ from django.urls import path
 from rest_framework.routers import SimpleRouter
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import *
+from .views import check_api_view
+from .views import PostViewSet
+from .views import UserCreate
 
 router = SimpleRouter()
-# router.register("notes", NoteViewSet, "notes")
+router.register("posts", PostViewSet, "posts")
+# router.register("comments", NoteViewSet, "comments")
 # .../posts
 # .../posts/id
 
@@ -13,6 +16,6 @@ urlpatterns = [
     path("check/", check_api_view),
     path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
-    # path("register/", UserCreate.as_view()),
+    path("register/", UserCreate.as_view()),
     *router.urls,
 ]
