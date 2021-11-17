@@ -49,3 +49,7 @@
 - `python src/manage.py migrate` - применить миграции
 - `python src/manage.py runserver` - запуск сервера для разработки
 - `pip3 install pre-commit && pre-commit install` - включение pre-commit hook для автоматического запуска линтера
+
+### Загрузка данных
+
+- `python src/manage.py loaddata src/main/fixtures/*.json` - загрузка начальных данных

@@ -1,0 +1,9 @@
+[
+  {"model":"main.category","pk":1,"fields":{"name": "IT"}},
+  {"model":"main.category","pk":2,"fields":{"name": "Photography"}},
+  {"model":"main.category","pk":3,"fields":{"name": "Science"}},
+  {"model":"main.category","pk":4,"fields":{"name": "Music"}},
+  {"model":"main.category","pk":5,"fields":{"name": "Art"}},
+  {"model":"main.category","pk":6,"fields":{"name": "Sports"}},
+  {"model":"main.category","pk":7,"fields":{"name": "News"}}
+]
