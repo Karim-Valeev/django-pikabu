@@ -6,7 +6,7 @@
 .navigation{
     background-color: white;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-right: 5px;
     margin-left: 5px;
@@ -31,11 +31,6 @@
     color: black;
 }
 
-.center{
-    text-align: center;
-    font-size: 40px;
-}
-
 .footer{
     background-color: white;
     display: flex;
@@ -44,7 +39,7 @@
     padding-left: 5px;
     padding-right: 5px;
     /*margin: 30px 30px 30px 30px;*/
-    border: blue 3px solid;
+    border: rgba(50,76,255,0.11) 3px solid;
     margin-top: 50px;
     position: fixed;
     width: 100%;
@@ -57,7 +52,7 @@
 
 .insta{
     font-size: 25px;
-    color: blue;
+    color: rgba(155,109,255,0.94);
     margin-right: 10px
 }
 

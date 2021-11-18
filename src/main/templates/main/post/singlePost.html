@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{%  block title %}Posts{% endblock %}
+{% block content %}
+
+    <h2>{{ post.title }}</h2>
+    <p>Author: {{ post.author.username }}</p>
+    <p>{{ post.body }}</p>
+    <div>
+        {% for category in post.categories.all %}
+            <span><b><i>{{ category.name }}</i></b></span>
+        {% endfor %}
+    </div>
+    <div class="post-buttons">
+        <div>
+            <form action="{% url 'update-post' post.pk %}" method="GET">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Update post</button>
+            </form>
+        </div>
+        <div>
+            <form action="{% url 'delete-post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Delete post</button>
+            </form>
+        </div>
+    </div>
+
+    <p>
+        <a href="{% url 'create-comment' post.pk 0 %}">Leave a comment</a>
+    </p>
+
+    <h3>Comments:</h3>
+    {% for comment in post.comments.all %}
+{#         Первые комменты, у которых поле in_reply_to пустое, оставленные непосредственно под постом #}
+{#         Под каждым из таких уже идут вложенные #}
+        <div class="comment">
+            {% if not comment.in_reply_to %}
+                <span>* [ {{ comment.author.username }} at {{ comment.created_at|date:"H:i d.m.Y" }} ]</span>
+            {% endif %}
+            {% if user == comment.author %}
+                <div class="post-buttons">
+                    <div>
+                        <form action="{% url 'update-comment' comment.pk %}" method="GET">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-sm btn-primary">Update comment</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'delete-comment' comment.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-sm btn-primary">Delete comment</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+            <p>{{ comment.text }}</p>
+            <p><a href="{% url 'create-comment' comment.post.pk comment.pk %}">Reply</a></p>
+            {% for item in comment.response_comments.all %}
+                {% include 'main/partials/recursive comment.html' with comment=item %}
+            {% endfor %}
+        </div>
+
+
+    {% endfor %}
+{% endblock %}

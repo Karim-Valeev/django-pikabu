@@ -19,7 +19,6 @@ class Comment(BaseModel):
         verbose_name="In reply to",
         related_name="response_comments",
     )
-    # likes - M2M
 
     class Meta:
         db_table = "comment"

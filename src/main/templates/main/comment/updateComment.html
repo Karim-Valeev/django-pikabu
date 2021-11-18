@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Create Comment{% endblock %}
+
+{% block content %}
+    <div class="update-form-title">
+        <div>
+            Edit your comment
+        </div>
+        <div>
+            {% if comment.in_reply_to %}
+                Reply to: "{{ comment.in_reply_to.text }}"
+            {% endif %}
+        </div>
+        <div>
+            Under post: "{{ comment.post.title }}"
+        </div>
+    </div>
+
+    <form action="{% url 'update-comment' comment.pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Edit comment</button>
+    </form>
+
+{% endblock %}

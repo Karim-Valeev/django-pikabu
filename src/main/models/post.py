@@ -9,7 +9,7 @@ class Post(BaseModel):
     title = models.CharField(max_length=500, null=False, blank=False, verbose_name="Title")
     body = models.TextField(max_length=5000, null=True, blank=True, verbose_name="Body")
     categories = models.ManyToManyField(
-        "Category", db_table="post_category", verbose_name="Post categories", related_name="categories"
+        "Category", blank=True, db_table="post_category", verbose_name="Post categories", related_name="categories"
     )
 
     def __str__(self):

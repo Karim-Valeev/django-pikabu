@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{%  block title %}Update Post{% endblock %}
+
+{% block content %}
+    <h2>Update your post!</h2>
+    <form action="{% url 'update-post' post.pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update post</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{%  block title %}My Posts{% endblock %}
+{% block content %}
+    <div class="container mt-4 mb-4">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 col-lg-5">
+                <h2 class="h2 mb-4 center top-margin-50px">Your posts</h2>
+                <div class="center-create-link">
+                    <a href="{% url 'create-post' %}">Create new!</a>
+                </div>
+                <div class="posts">
+                    {% for post in posts %}
+                        <div class="post">
+                            <p><a href="{% url 'post' post.id %}">{{ post.title }}</a></p>
+                            <p>{{ post.author.username }}</p>
+
+                            <div>
+                                {% for category in post.categories.all %}
+                                    <span><b><i>{{ category.name }}</i></b></span>
+                                {% endfor %}
+                            </div>
+                            <p>{{ post.created_at }}</p>
+                            <div class="post-buttons">
+                                <div>
+                                    <form action="{% url 'update-post' post.pk %}" method="GET">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </form>
+                                </div>
+                                <div>
+                                    <form action="{% url 'delete-post' post.pk %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {% if post.comments.all %}
+                                <p><a href="{% url 'post' post.id %}">Open comments</a></p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
