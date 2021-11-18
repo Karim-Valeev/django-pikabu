@@ -88,10 +88,10 @@ WSGI_APPLICATION = "django_pikabu.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql_psycopg2"),
-        "NAME": os.environ.get("DB_NAME", "dp"),
-        "USER": os.environ.get("DB_USER", "dp"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "dp"),
-        "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
+        "NAME": os.environ.get("DB_NAME", "d9ne3duu1qji2b"),
+        "USER": os.environ.get("DB_USER", "kjzmdbxyeiepvx"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "24cbca39ebbcc8fe34e5e8cb83d4fa03aec30493403d1bb1a6d80d21246e86bc"),
+        "HOST": os.environ.get("DB_HOST", "ec2-34-199-224-49.compute-1.amazonaws.com"),
         "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
