@@ -18,7 +18,7 @@ class CreateCommentView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["post"] = get_object_or_404(Post, pk=self.kwargs["post_id"])
-        # здесь как бы нарушение DRY, стоит ли вынести в отдельный метод и в отдельный файлик?
+        # Todo здесь как бы нарушение DRY, стоит ли вынести в отдельный метод и в отдельный файлик?
         comments = Comment.objects.filter(id=self.kwargs["comment_id"])
         context["comment"] = comments[0] if len(comments) == 1 else None
         return context

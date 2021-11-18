@@ -2,8 +2,6 @@ from main.models import Category
 from main.models import Post
 from rest_framework import serializers
 
-from .user import UserSerializer
-
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +10,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
     categories = CategorySerializer(many=True)
 
     class Meta:
@@ -27,8 +24,6 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
 
 class PostUpdateSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
-
     class Meta:
         model = Post
         fields = ("id", "created_at", "author", "title", "body", "categories")

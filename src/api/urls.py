@@ -3,12 +3,13 @@ from rest_framework.routers import SimpleRouter
 from rest_framework_simplejwt import views as jwt_views
 
 from .views import check_api_view
+from .views import CommentViewSet
 from .views import PostViewSet
 from .views import UserCreate
 
 router = SimpleRouter()
 router.register("posts", PostViewSet, "posts")
-# router.register("comments", NoteViewSet, "comments")
+router.register("comments", CommentViewSet, "comments")
 # .../posts
 # .../posts/id
 

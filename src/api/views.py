@@ -1,3 +1,4 @@
+from main.models import Comment
 from main.models import Post
 from main.models import User
 from rest_framework import filters
@@ -5,13 +6,18 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import BasePermission
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from .serializers import CommentSerializer
 from .serializers import PostCreateSerializer
 from .serializers import PostSerializer
 from .serializers import PostUpdateSerializer
 from .serializers import UserCreateSerializer
+from .serializers.comment import CommentCreateSerializer
+from .serializers.comment import CommentUpdateSerializer
 
 
 @api_view(["GET"])
@@ -27,11 +33,19 @@ class UserCreate(generics.CreateAPIView):
     permission_classes = (AllowAny,)
 
 
+class ChangeOnlyForOwnerPermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.author.id == request.user.id
+
+
+# Todo Стоит ли общие поля и значения вынести в какой-то BaseModelViewSet?
 class PostViewSet(ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, ChangeOnlyForOwnerPermission]
     serializer_class = PostSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ["title"]
+    # Фильтрация по айдишнику пользователя
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    ordering_fields = ["created_at"]
+    search_fields = ["author__id"]
 
     def perform_create(self, serializer):
         author = self.request.user
@@ -47,47 +61,28 @@ class PostViewSet(ModelViewSet):
         return PostSerializer
 
     def get_queryset(self):
-        # user = self.request.user
-        # return Post.objects.filter(author=user)
         return Post.objects.all()
 
 
-# class NoteChangeOnlyForOwnerPermission(BasePermission):
-#     def has_object_permission(self, request, view, obj):
-#         return obj.author.id == request.user.id
-#
-#
-# class NoteViewSet(ModelViewSet):
-#     """Notes"""
-#     permission_classes = [IsAuthenticated, NoteChangeOnlyForOwnerPermission]
-#     serializer_class = NoteSerializer
-#     filter_backends = [filters.SearchFilter]
-#     search_fields = ["topic"]
-#
-#     def create(self, request, *args, **kwargs):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_create(serializer)
-#         headers = self.get_success_headers(serializer.data)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-#
-#     def perform_create(self, serializer: NoteSerializer):
-#         author = self.request.user
-#         instance: Note = serializer.save(author=author)
-#         # todo брать URL из настроек
-#         url = f"http://127.0.0.1:8000/notes/{instance.id}"
-#         instance.url = url
-#         instance.save()
-#
-#     def get_serializer_class(self):
-#         if self.action == "retrieve":
-#             return NoteSerializer
-#         if self.action == "create":
-#             return NoteCreateSerializer
-#         if self.action == "update":
-#             return NoteUpdateSerializer
-#         return NoteSerializer
-#
-#     def get_queryset(self):
-#         user = self.request.user
-#         return Note.objects.filter(author=user)
+class CommentViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, ChangeOnlyForOwnerPermission]
+    serializer_class = CommentSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    ordering_fields = ["created_at"]
+    search_fields = ["post__id", "author__username"]
+
+    def perform_create(self, serializer):
+        author = self.request.user
+        serializer.save(author=author)
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return CommentSerializer
+        if self.action == "create":
+            return CommentCreateSerializer
+        if self.action == "update":
+            return CommentUpdateSerializer
+        return CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.all()

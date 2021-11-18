@@ -1,36 +1,30 @@
 from main.models import Comment
-from main.models import Post
 from rest_framework import serializers
 
-from .user import UserSerializer
 
-
-class PostForCommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ["id"]
+# https://stackoverflow.com/questions/13376894/django-rest-framework-nested-self-referential-objects
+class RecursiveField(serializers.Serializer):
+    def to_representation(self, value):
+        serializer = self.parent.parent.__class__(value, context=self.context)
+        return serializer.data
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
-    post = PostForCommentSerializer()
-    # todo in_reply_to там только комменты, которые уже за постом закреплены
+    response_comments = RecursiveField(many=True)
 
     class Meta:
         model = Comment
-        fields = ("id", "author", "post", "created_at", "text")
+        fields = ("id", "author", "post", "in_reply_to", "created_at", "text", "response_comments")
 
 
-# class CommentCreateSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Comment
-#         fields = ("title", "body", "categories")
-#
-#
-# class CommentUpdateSerializer(serializers.ModelSerializer):
-#     author = UserSerializer()
-#
-#     class Meta:
-#         model = Comment
-#         fields = ("id", "created_at", "author", "title", "body", "categories")
-#         read_only_fields = ("id", "created_at", "author")
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("post", "in_reply_to", "text")
+
+
+class CommentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("id", "created_at", "author", "post", "in_reply_to", "text")
+        read_only_fields = ("id", "created_at", "author", "post", "in_reply_to")
