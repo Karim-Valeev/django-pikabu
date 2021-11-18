@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.shortcuts import render
 from main.forms import AuthForm
@@ -37,12 +36,6 @@ def registration_view(request):
             "message": message,
         },
     )
-
-
-class UserLoginView(LoginView):
-    form_class = AuthForm
-    template_name = "main/user/login.html"
-    redirect_authenticated_user = False
 
 
 def login_view(request):

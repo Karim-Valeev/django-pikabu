@@ -10,25 +10,12 @@
     align-items: center;
     margin-right: 5px;
     margin-left: 5px;
-    /*margin: 30px 30px 30px 30px;*/
     border: rgba(50,76,255,0.11) 3px solid;
 }
 
 .profile{
     font-size: 25px;
     margin: 20px;
-}
-
-.pic{
-    margin-left: 10px;
-}
-.main-title-link{
-    font-family: 'Merienda', cursive;
-    color: black;
-    text-decoration: none;
-}
-.main-title-link:hover{
-    color: black;
 }
 
 .footer{
@@ -54,9 +41,4 @@
     font-size: 25px;
     color: rgba(155,109,255,0.94);
     margin-right: 10px
-}
-
-.img-center{
-    margin-left: 100px;
-    margin-right: 465px;
 }

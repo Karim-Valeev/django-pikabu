@@ -36,7 +36,6 @@
   - created_at
   - post | FK
   - in_reply_to | FK
-  - like(?) 
 
 
 ### Запуск
@@ -44,7 +43,7 @@
 - `python3 -m venv venv` - создать виртуальное окружение
 - `source venv/bin/activate` - войти в виртуальное окружение 
 - `pip install -r requirements.txt` - установка зависимостей
-- `docker-compose up` - запуск базы данных PostgreSQL (вместо выполнения этой команды можно поднять базу данных другим
+- `docker-compose up -d` - запуск базы данных PostgreSQL (вместо выполнения этой команды можно поднять базу данных другим
 способом)
 - `python src/manage.py migrate` - применить миграции
 - `python src/manage.py runserver` - запуск сервера для разработки
