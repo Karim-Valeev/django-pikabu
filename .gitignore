@@ -3,6 +3,7 @@ publications_source
 .env
 src/staticfiles/
 src/test.py
+.idea/
 
 requests.http
 
