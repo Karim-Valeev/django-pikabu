@@ -28,7 +28,7 @@ load_dotenv(find_dotenv(filename=str(BASE_DIR / ".env")))
 SECRET_KEY = "django-insecure-%2!f%#j2+3bbm*qgm4@&m^upgg1&+8zlu16%1ohlir$8py!h#("
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "django-pikabu.herokuapp.com"]
 
