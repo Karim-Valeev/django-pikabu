@@ -28,6 +28,8 @@ def check_api_view(request):
 
 
 class UserCreate(generics.CreateAPIView):
+    """User creation via API"""
+
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
     permission_classes = (AllowAny,)
@@ -40,6 +42,8 @@ class ChangeOnlyForOwnerPermission(BasePermission):
 
 # Todo Стоит ли общие поля и значения вынести в какой-то BaseModelViewSet?
 class PostViewSet(ModelViewSet):
+    """Posts"""
+
     permission_classes = [IsAuthenticated, ChangeOnlyForOwnerPermission]
     serializer_class = PostSerializer
     # Фильтрация по айдишнику пользователя
@@ -65,6 +69,8 @@ class PostViewSet(ModelViewSet):
 
 
 class CommentViewSet(ModelViewSet):
+    """Comments"""
+
     permission_classes = [IsAuthenticated, ChangeOnlyForOwnerPermission]
     serializer_class = CommentSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
