@@ -6,11 +6,11 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
-from rest_framework.permissions import BasePermission
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from .mixins import ChangeOnlyForOwnerPermission
 from .serializers import CommentSerializer
 from .serializers import PostCreateSerializer
 from .serializers import PostSerializer
@@ -33,11 +33,6 @@ class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
     permission_classes = (AllowAny,)
-
-
-class ChangeOnlyForOwnerPermission(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.author.id == request.user.id
 
 
 # Todo Стоит ли общие поля и значения вынести в какой-то BaseModelViewSet?

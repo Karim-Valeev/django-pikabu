@@ -4,7 +4,7 @@ from django.test import TestCase
 from main.models import User
 
 
-class ForumApiChechTestCase(TestCase):
+class ForumApiCheckTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         user = User(email="test2@gmail.ru", username="Тестер2")

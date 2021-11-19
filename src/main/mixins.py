@@ -1,5 +1,4 @@
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
 
 
 class OwnershipRequiredMixin:
@@ -14,6 +13,6 @@ class OwnershipRequiredMixin:
 
 
 # class RedirectBackToPostAfterChangingMixin:
-#     """ Creating success url to return to post page """
+#     """Creating success url to return to post page"""
 #     def get_success_url(self):
 #         return reverse_lazy('post', kwargs={'pk': self.kwargs["post_id"]})

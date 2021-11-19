@@ -2,7 +2,6 @@ from main.models import Comment
 from rest_framework import serializers
 
 
-# https://stackoverflow.com/questions/13376894/django-rest-framework-nested-self-referential-objects
 class RecursiveField(serializers.Serializer):
     def to_representation(self, value):
         serializer = self.parent.parent.__class__(value, context=self.context)
