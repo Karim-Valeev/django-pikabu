@@ -52,6 +52,7 @@ class AllPostsListView(ListView):
     template_name = "main/post/allPosts.html"
 
     def get_queryset(self):
+        # Более оптимальные запросы к БД
         return Post.objects.all().select_related("author").prefetch_related("comments", "categories")
 
 
@@ -61,6 +62,7 @@ class MyPostsListView(LoginRequiredMixin, ListView):
     template_name = "main/post/accountPosts.html"
 
     def get_queryset(self):
+        # Более оптимальные запросы к БД
         return (
             Post.objects.filter(author=self.request.user)
             .select_related("author")

@@ -47,7 +47,7 @@
 способом)
 - `python src/manage.py migrate` - применить миграции
 - `python src/manage.py collectstatic` - собрать всю статику в одну папку
-- `cd sdc/main/static && npm install` - поставить все пакеты, необходимые для верстки через пакетный менеджер npm
+- `cd src/main/static && npm install` - поставить все пакеты, необходимые для верстки через пакетный менеджер npm
 - `pip3 install pre-commit && pre-commit install` - включение pre-commit hook для автоматического запуска линтера
 - `python src/manage.py runserver` - запуск сервера для разработки
 
