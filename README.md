@@ -1,6 +1,6 @@
 # Приложение с системой древовидных комментариев (как на pikabu.ru).
 
-### Link to the [site]()
+### Link to the [site](https://django-pikabu.herokuapp.com/)
 
 ### Функциональность:
 - регистрация и авторизация пользователей
