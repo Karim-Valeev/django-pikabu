@@ -3,9 +3,19 @@
 {% block title %}Create Comment{% endblock %}
 
 {% block content %}
-{#    <h2>Leave a comment under: "{{ post.title }}"</h2>#}
-
-{#    <h2>Reply to: "{{ comment.text }}"</h2>#}
+    <div class="comment-form-title">
+        <div>
+            Comment
+        </div>
+        <div>
+            {% if comment %}
+                Reply to: "{{ comment.text }}"
+            {% endif %}
+        </div>
+        <div>
+            Under post: "{{ post.title }}"
+        </div>
+    </div>
     {% if comment %}
     <form action="{% url 'create-comment' post.pk comment.pk %}" method="post">
     {% else %}
