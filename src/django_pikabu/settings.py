@@ -168,6 +168,8 @@ SIMPLE_JWT = {
 }
 # fmt: on
 
+SWAGGER_SETTINGS = {"DEFAULT_MODEL_DEPTH": -1}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
