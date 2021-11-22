@@ -33,33 +33,31 @@
     {% for comment in post.comments.all %}
 {#         Первые комменты, у которых поле in_reply_to пустое, оставленные непосредственно под постом #}
 {#         Под каждым из таких уже идут вложенные #}
-        <div class="comment">
-            {% if not comment.in_reply_to %}
+        {% if not comment.in_reply_to %}
+            <div class="comment">
                 <span>* [ {{ comment.author.username }} at {{ comment.created_at|date:"H:i d.m.Y" }} ]</span>
-            {% endif %}
-            {% if user == comment.author %}
-                <div class="post-buttons">
-                    <div>
-                        <form action="{% url 'update-comment' comment.pk %}" method="GET">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-sm btn-primary">Update comment</button>
-                        </form>
+                {% if user == comment.author %}
+                    <div class="post-buttons">
+                        <div>
+                            <form action="{% url 'update-comment' comment.pk %}" method="GET">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-sm btn-primary">Update comment</button>
+                            </form>
+                        </div>
+                        <div>
+                            <form action="{% url 'delete-comment' comment.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-sm btn-primary">Delete comment</button>
+                            </form>
+                        </div>
                     </div>
-                    <div>
-                        <form action="{% url 'delete-comment' comment.pk %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-sm btn-primary">Delete comment</button>
-                        </form>
-                    </div>
-                </div>
-            {% endif %}
-            <p>{{ comment.text }}</p>
-            <p><a href="{% url 'create-comment' comment.post.pk comment.pk %}">Reply</a></p>
-            {% for item in comment.response_comments.all %}
-                {% include 'main/partials/recursive comment.html' with comment=item %}
-            {% endfor %}
-        </div>
-
-
+                {% endif %}
+                <p>{{ comment.text }}</p>
+                <p><a href="{% url 'create-comment' comment.post.pk comment.pk %}">Reply</a></p>
+                {% for item in comment.response_comments.all %}
+                    {% include 'main/partials/recursive comment.html' with comment=item %}
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}
