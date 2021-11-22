@@ -14,8 +14,8 @@ repos:
         language_version: python3.8
   - repo: local
     hooks:
-      - id: django-test
-        name: django-test
+      - id: pytest
+        name: pytest
         entry: pytest -n 2 src
         always_run: true
         pass_filenames: false
