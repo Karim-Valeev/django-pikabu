@@ -85,16 +85,14 @@ WSGI_APPLICATION = "django_pikabu.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql_psycopg2"),
-        "NAME": os.environ.get("DB_NAME", "d9ne3duu1qji2b"),
-        "USER": os.environ.get("DB_USER", "kjzmdbxyeiepvx"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "24cbca39ebbcc8fe34e5e8cb83d4fa03aec30493403d1bb1a6d80d21246e86bc"),
-        "HOST": os.environ.get("DB_HOST", "ec2-34-199-224-49.compute-1.amazonaws.com"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
+        "ENGINE": os.environ.get("DB_ENGINE"),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT"),
     }
 }
-
-
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES["default"].update(db_from_env)
 
