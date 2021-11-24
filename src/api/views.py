@@ -27,7 +27,7 @@ def check_api_view(request):
     return Response(content, status=status.HTTP_200_OK)
 
 
-class UserCreate(generics.CreateAPIView):
+class UserCreateView(generics.CreateAPIView):
     """User creation via API"""
 
     queryset = User.objects.all()
