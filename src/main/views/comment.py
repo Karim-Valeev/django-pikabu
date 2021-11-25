@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -18,19 +19,18 @@ class CreateCommentView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["post"] = get_object_or_404(Post, pk=self.kwargs["post_id"])
-        # Todo здесь как бы нарушение DRY, стоит ли вынести в отдельный метод и в отдельный файлик?
-        comments = Comment.objects.filter(id=self.kwargs["comment_id"])
-        context["comment"] = comments[0] if len(comments) == 1 else None
+        context["comment"] = get_object_or_404(Comment, pk=self.kwargs["comment_id"])
         return context
 
     def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.author = self.request.user
-        comment.post = get_object_or_404(Post, pk=self.kwargs["post_id"])
-        comments = Comment.objects.filter(id=self.kwargs["comment_id"])
-        comment.in_reply_to = comments[0] if len(comments) == 1 else None
-        comment.save()
-        return super().form_valid(form)
+        in_reply_to = get_object_or_404(Comment, pk=self.kwargs["comment_id"])
+        if in_reply_to.is_replying_allowed:
+            comment = form.save(commit=False)
+            comment.author = self.request.user
+            comment.post = get_object_or_404(Post, pk=self.kwargs["post_id"])
+            comment.in_reply_to = in_reply_to
+            comment.save()
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse_lazy("post", kwargs={"pk": self.kwargs["post_id"]})

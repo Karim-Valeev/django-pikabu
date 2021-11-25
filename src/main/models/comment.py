@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from .base import BaseModel
@@ -19,6 +20,19 @@ class Comment(BaseModel):
         verbose_name="In reply to",
         related_name="response_comments",
     )
+
+    @property
+    def is_replying_allowed(self):
+        if self.in_reply_to is not None:
+            count = 1
+            parent = Comment.objects.get(pk=self.in_reply_to.pk)
+            while parent.in_reply_to is not None:
+                count += 1
+                # по сути можно сделать сложный возможно(но скорее всего нет) более оптимальный запрос
+                parent = Comment.objects.get(pk=parent.in_reply_to.pk)
+            return count <= int(settings.MAXIMUM_COMMENTS_NESTING)
+        else:
+            return True
 
     class Meta:
         db_table = "comment"

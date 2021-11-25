@@ -54,6 +54,11 @@
                 {% endif %}
                 <p>{{ comment.text }}</p>
                 <p><a href="{% url 'create-comment' comment.post.pk comment.pk %}">Reply</a></p>
+                {% if comment.is_replying_allowed == True %}
+                    Можно отвечать
+                {% else %}
+                    НЕЛЬЗЯ ОТВЕЧАТЬ
+                {% endif %}
                 {% for item in comment.response_comments.all %}
                     {% include 'main/partials/recursive comment.html' with comment=item %}
                 {% endfor %}
