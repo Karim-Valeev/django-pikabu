@@ -19,6 +19,11 @@
             <div class="row justify-content-md-center">
                 <div class="col-md-12 col-lg-5">
                     <h1 class="h2 mb-4 center top-margin-50px">Login</h1>
+                    {% if form.email.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.email.errors | escape | striptags }}
+                        </div>
+                    {% endif %}
                     <label>Email:</label>
                     <div>
                         <input type="text" name="email" required class="form-control mb-2" style="width:100%"  placeholder="Enter email here:" value=""/>
