@@ -4,7 +4,7 @@ publications_source
 src/staticfiles/
 src/test.py
 .idea/
-
+todo
 requests.http
 
 ### Django ###

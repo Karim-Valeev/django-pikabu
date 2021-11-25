@@ -72,6 +72,17 @@ class CommentViewSet(ModelViewSet):
     ordering_fields = ["created_at"]
     search_fields = ["post__id", "author__username"]
 
+    def create(self, request, *args, **kwargs):
+        comment_id = int(request.POST.get("in_reply_to", ""))
+        in_reply_to: Comment = Comment.objects.first(pk=comment_id)
+        if in_reply_to is not None and in_reply_to.is_replying_allowed:
+            return super().create(request, *args, **kwargs)
+        else:
+            return Response(
+                {"Error message": f"Your are not allowed to reply to comment with id {comment_id}"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
     def perform_create(self, serializer):
         author = self.request.user
         serializer.save(author=author)
