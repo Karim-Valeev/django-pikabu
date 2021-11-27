@@ -54,3 +54,9 @@
 ### Загрузка данных
 
 - `python src/manage.py loaddata src/main/fixtures/*.json` - загрузка начальных данных
+
+### Запуск тестов
+
+- `python src/manage.py runserver` - запуск сервера для разработки
+- `pytest -n 2 src` - запуск всех тестов в папке src на двух ядрах
+
