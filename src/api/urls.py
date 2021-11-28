@@ -12,10 +12,10 @@ from .views import UserCreateView
 
 
 router = SimpleRouter()
-router.register("posts", PostViewSet, "posts")
-router.register("comments", CommentViewSet, "comments")
-# .../posts
-# .../posts/id
+router.register("posts", PostViewSet, "posts-api")
+router.register("comments", CommentViewSet, "comments-api")
+# .../posts with url_name posts-api-list
+# .../posts/id with url_name posts-api-detail
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -35,7 +35,11 @@ urlpatterns = [
     path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token-refresh"),
     path("register/", UserCreateView.as_view(), name="api-register"),
     *router.urls,
-    re_path("swagger(?P<format>\.json|\.yaml)$", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    re_path(
+        "swagger(?P<format>\.json|\.yaml)$",
+        schema_view.without_ui(cache_timeout=0),
+        name="schema-json",
+    ),
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]

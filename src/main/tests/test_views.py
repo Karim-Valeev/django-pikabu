@@ -6,7 +6,7 @@ from main.models import Post
 
 @pytest.fixture
 def get_password():
-    return "test_pass"
+    return "Test_pass.2021"
 
 
 @pytest.fixture
@@ -73,14 +73,11 @@ def test_leave_comment_under_other_comment(auto_login_user):
     create_post_url = reverse("create-post")
     client.post(create_post_url, {"title": "Test post", "body": "Test post body :)"})
     post_id = Post.objects.get(title="Test post").pk
-    create_first_comment_url = reverse("create-comment", kwargs={"post_id": post_id, "comment_id": 0})
-    responce = client.post(create_first_comment_url, {"text": "First comment under first post"})
-    print(f"{responce=}")
-    print(Post.objects.get(title="Test post"))
-    print(Post.objects.get(title="Test post").comments)
+    create_first_comment_url = reverse(
+        "create-comment", kwargs={"post_id": post_id, "comment_id": 0}
+    )
+    client.post(create_first_comment_url, {"text": "First comment under first post"})
     first_comment_id = Comment.objects.get(author=user).pk
-    print(f"first comment id{first_comment_id}")
-
     create_first_reply_comment_url = reverse(
         "create-comment", kwargs={"post_id": post_id, "comment_id": first_comment_id}
     )

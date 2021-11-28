@@ -75,7 +75,11 @@ class CommentViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         comment_id = int(request.POST.get("in_reply_to", ""))
         in_reply_to: Comment = Comment.objects.first(pk=comment_id)
-        if in_reply_to is not None and in_reply_to.is_replying_allowed:
+        # т.к. здесь сложное логическое условие решил исппользовать флаг
+        flag = True
+        if in_reply_to is not None:
+            flag = in_reply_to.is_replying_allowed
+        if flag:
             return super().create(request, *args, **kwargs)
         else:
             return Response(
