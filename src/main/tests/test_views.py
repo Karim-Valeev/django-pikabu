@@ -56,7 +56,7 @@ def test_create_post_view(auto_login_user):
     assert new_post.body == "Test post body :)"
 
 
-@pytest.mark.db
+@pytest.mark.django_db
 def test_delete_post(auto_login_user):
     client, user = auto_login_user()
     create_url = reverse("create-post")
@@ -67,7 +67,7 @@ def test_delete_post(auto_login_user):
     assert response.url == reverse("my-posts")
 
 
-@pytest.mark.db
+@pytest.mark.django_db
 def test_leave_comment_under_other_comment(auto_login_user):
     client, user = auto_login_user()
     create_post_url = reverse("create-post")

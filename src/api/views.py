@@ -73,8 +73,11 @@ class CommentViewSet(ModelViewSet):
     search_fields = ["post__id", "author__username"]
 
     def create(self, request, *args, **kwargs):
-        comment_id = int(request.POST.get("in_reply_to", ""))
-        in_reply_to: Comment = Comment.objects.first(pk=comment_id)
+        comment_id = request.POST.get("in_reply_to", -1)
+        try:
+            in_reply_to = Comment.objects.get(pk=comment_id)
+        except Comment.DoesNotExist:
+            in_reply_to = None
         # т.к. здесь сложное логическое условие решил исппользовать флаг
         flag = True
         if in_reply_to is not None:

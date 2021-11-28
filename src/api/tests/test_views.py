@@ -1,8 +1,9 @@
 import pytest
 from django.urls import reverse
+from main.models import Comment
 from main.models import Post
-from main.tests import create_user
-from main.tests import get_password
+from main.tests import create_user  # noqa
+from main.tests import get_password  # noqa
 from rest_framework.test import APIClient
 
 
@@ -90,7 +91,34 @@ def test_api_delete_post(api_client, get_jwt_access_token_with_auth_header_types
     assert response.status_code == 204
 
 
-# 9 создать коммент
+@pytest.mark.django_db
+def test_api_create_comment(api_client, get_jwt_access_token_with_auth_header_types):
+    api_client.credentials(HTTP_AUTHORIZATION=get_jwt_access_token_with_auth_header_types)
+    api_client.post(
+        reverse("posts-api-list"),
+        {"title": "First post created with api", "body": "Body of first api post 123"},
+    )
+    post = Post.objects.get(title="First post created with api")
+    url = reverse("comments-api-list")
+    print(post.pk)
+    response = api_client.post(url, {"text": "First comment created with api", "post": post.pk})
+    assert response.status_code == 201
 
 
-# 10 поменять коммент
+@pytest.mark.django_db
+def test_api_update_comment(api_client, get_jwt_access_token_with_auth_header_types):
+    api_client.credentials(HTTP_AUTHORIZATION=get_jwt_access_token_with_auth_header_types)
+    api_client.post(
+        reverse("posts-api-list"),
+        {"title": "First post created with api", "body": "Body of first api post 123"},
+    )
+    post = Post.objects.get(title="First post created with api")
+    print(post.pk)
+    response = api_client.post(
+        reverse("comments-api-list"), {"text": "First comment created with api", "post": post.pk}
+    )
+    comment = Comment.objects.get(post__pk=post.pk)
+
+    url = reverse("comments-api-detail", kwargs={"pk": comment.pk})
+    response = api_client.patch(url, {"text": "Updated first comment with api"})
+    assert response.status_code == 200
